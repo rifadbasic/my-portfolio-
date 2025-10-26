@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 4s ease infinite;
+}
+
+/* RGB gradient border on hover */
+@keyframes border-gradient {
+  0% { border-image-source: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet); }
+  50% { border-image-source: linear-gradient(90deg, violet, blue, cyan, green, yellow, orange, red); }
+  100% { border-image-source: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet); }
+}
+
+.hover\:border-gradient-animated:hover {
+  border-radius: 5px;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+  animation: border-gradient 3s linear infinite;
+}
+
+/* Slow spin on hover for icons */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow:hover {
+  border-radius: 5px;
+  animation: spin-slow 6s linear infinite;
+}
