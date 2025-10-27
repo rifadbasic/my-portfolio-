@@ -4,10 +4,13 @@ import Home from "../pages/Home";
 import About from "../components/About";
 import Project from "../components/projects/Project";
 import Skill from "../components/Skill";
+import Error from "../pages/Error";
+import Resume from "../pages/Resume";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <Error />,
     element: <MainLayout />,
     children: [
       {
@@ -28,6 +31,10 @@ const router = createBrowserRouter([
         element : <Skill/>
       },
     ],
+  },
+  {
+    path: "/resume",
+    element: <Resume />,
   },
 ]);
 export default router;
