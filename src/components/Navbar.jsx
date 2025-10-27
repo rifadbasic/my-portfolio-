@@ -15,7 +15,7 @@ const Navbar = () => {
         return "dark";
       }
     } catch {
-      // Ignore errors and default to light theme
+      // ignore
     }
     return "light";
   };
@@ -26,7 +26,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    if (theme === "dark" || theme === null) {
+    if (theme === "dark") {
       root.classList.add("dark");
       root.classList.remove("light");
     } else {
@@ -66,24 +66,29 @@ const Navbar = () => {
     };
     if (menuOpen) document.addEventListener("mousedown", handleClickOutside);
     else document.removeEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-black dark:bg-gray-900 transition-all duration-500">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 dark:bg-gray-900/80 backdrop-blur-md transition-all duration-500">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-500 via-cyan-400 to-pink-500 bg-clip-text text-transparent select-none cursor-pointer"
+        <motion.div
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-pink-500 via-cyan-400 to-indigo-500 bg-[length:200%_200%] bg-clip-text text-transparent select-none cursor-pointer"
         >
-          rifadbasic
-        </Link>
+          <Link to="/">rifadbasic</Link>
+        </motion.div>
 
-        {/* Desktop Nav */}
-        <div className="hidden sm:flex gap-6 items-center font-medium text-lg">
+        {/* Desktop Nav (aligned to right) */}
+        <div className="hidden sm:flex items-center gap-8 font-medium text-lg ml-auto">
           {navLinks.map((link) => (
             <NavLink
               key={link.name}
@@ -101,11 +106,16 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-        </div>
 
-        {/* Right Controls */}
-        <div className="flex items-center gap-3">
-          {/* Theme toggle */}
+          {/* Hire Me */}
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-pink-500 text-white font-semibold shadow-md hover:opacity-95 transition"
+            onClick={() => (window.location.href = "#contact")}
+          >
+            Hire Me <Send size={16} />
+          </button>
+
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full hover:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center"
@@ -117,28 +127,20 @@ const Navbar = () => {
               <Moon size={20} className="text-gray-200" />
             )}
           </button>
-
-          {/* Hire Me */}
-          <button
-            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-pink-500 text-white font-semibold shadow-md hover:opacity-95 transition"
-            onClick={() => (window.location.href = "#contact")}
-          >
-            Hire Me <Send size={16} />
-          </button>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="sm:hidden p-3 rounded-full hover:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center"
-            onClick={() => setMenuOpen((prev) => !prev)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? (
-              <X size={24} className="text-gray-200" />
-            ) : (
-              <Menu size={24} className="text-gray-200" />
-            )}
-          </button>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="sm:hidden p-3 rounded-full hover:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-200 flex items-center justify-center"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? (
+            <X size={24} className="text-gray-200" />
+          ) : (
+            <Menu size={24} className="text-gray-200" />
+          )}
+        </button>
       </div>
 
       {/* Mobile Menu */}
@@ -149,7 +151,7 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black/50 dark:bg-gray-900/50 backdrop-blur-sm flex justify-end"
+            className="fixed inset-0 z-40 bg-black/60 dark:bg-gray-900/60 backdrop-blur-sm flex justify-end"
           >
             <motion.div
               ref={menuRef}
@@ -199,7 +201,6 @@ const Navbar = () => {
                 Hire Me <Send size={18} />
               </motion.button>
 
-              {/* Close Button inside Menu */}
               <button
                 onClick={() => setMenuOpen(false)}
                 className="absolute top-5 right-5 p-2 rounded-full hover:bg-gray-800 dark:hover:bg-gray-700 transition"

@@ -6,6 +6,7 @@ import Project from "../components/projects/Project";
 import Skill from "../components/Skill";
 import Error from "../pages/Error";
 import Resume from "../pages/Resume";
+import Contact from "../pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/skill",
         element : <Skill/>
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },
